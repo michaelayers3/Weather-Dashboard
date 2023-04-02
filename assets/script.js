@@ -68,64 +68,71 @@ function getWeather(lat, lon) {
             }
             console.log(i, info);
         }
+        var i=0;
+        var info= {
+            time: (data.list[i].dt_txt ),
+            icon: (data.list[i].weather[0].icon),
+            temp: (data.list[i].main.temp + '°F'),
+            wind: (data.list[i].wind.speed + ' MPH'),
+            humidity: (data.list[i].main.humidity + '%'),
+        }
         var day1Display = document.getElementById('day1-display')
-        // var day2Display = document.getElementById('day2-display')
-        // var day3Display = document.getElementById('day3-display')
-        // var day4Display = document.getElementById('day4-display')
-        // var day5Display = document.getElementById('day5-display')
+        day1Display.textContent= JSON.stringify(info);
+        var i=8;
+        var info= {
+            time: (data.list[i].dt_txt ),
+            icon: (data.list[i].weather[0].icon),
+            temp: (data.list[i].main.temp + '°F'),
+            wind: (data.list[i].wind.speed + ' MPH'),
+            humidity: (data.list[i].main.humidity + '%'),
+        }
+
+        var day2Display = document.getElementById('day2-display')
+        day2Display.textContent= JSON.stringify(info);
+
+        var i=16;
+        var info= {
+            time: (data.list[i].dt_txt ),
+            icon: (data.list[i].weather[0].icon),
+            temp: (data.list[i].main.temp + '°F'),
+            wind: (data.list[i].wind.speed + ' MPH'),
+            humidity: (data.list[i].main.humidity + '%'),
+        }
+
+        var day3Display = document.getElementById('day3-display')
+        day3Display.textContent= JSON.stringify(info);
+
+        var i=24;
+        var info= {
+            time: (data.list[i].dt_txt ),
+            icon: (data.list[i].weather[0].icon),
+            temp: (data.list[i].main.temp + '°F'),
+            wind: (data.list[i].wind.speed + ' MPH'),
+            humidity: (data.list[i].main.humidity + '%'),
+        }
+
+        var day4Display = document.getElementById('day4-display')
+        day4Display.textContent= JSON.stringify(info);
+
+        var i=32;
+        var info= {
+            time: (data.list[i].dt_txt ),
+            icon: (data.list[i].weather[0].icon),
+            temp: (data.list[i].main.temp + '°F'),
+            wind: (data.list[i].wind.speed + ' MPH'),
+            humidity: (data.list[i].main.humidity + '%'),
+        }
+
+        var day5Display = document.getElementById('day5-display')
+        day5Display.textContent= JSON.stringify(info);
+        
 
     
-    day1Display.innerHTML = 
-    `<div>
-    <p>Time: ${info.time}</p>
-    <img src="${info.icon}">
-    <p>Temperature: ${info.temp}</p>
-    <p>Wind Speed: ${info.wind}</p>
-    <p>Humidity: ${info.humidity}</p>
-  </div>
-  `
-       
-    //     }else if (i === 8) {
-    // day2Display.innerHTML = `
-    // <div>
-    //     <p>Time: ${info.time}</p>
-    //     <img src="${info.icon}">
-    //     <p>Temperature: ${info.temp}</p>
-    //     <p>Wind Speed: ${info.wind}</p>
-    //     <p>Humidity: ${info.humidity}</p>
-    // </div>`
-    //     }else if (i === 16) {   
-    // day3Display.innerHTML = `
-    // <div>
-    //     <p>Time: ${info.time}</p>
-    //     <img src="${info.icon}">
-    //     <p>Temperature: ${info.temp}</p>
-    //     <p>Wind Speed: ${info.wind}</p>
-    //     <p>Humidity: ${info.humidity}</p>
-    // </div>`
-    //     }else if (i === 24) {   
-    // day4Display.innerHTML = `
-    // <div>
-    //     <p>Time: ${info.time}</p>
-    //     <img src="${info.icon}">
-    //     <p>Temperature: ${info.temp}</p>
-    //     <p>Wind Speed: ${info.wind}</p>
-    //     <p>Humidity: ${info.humidity}</p>
-    // </div>`
-    //     }else if (i === 32) {
-    // day5Display.innerHTML = `
-    // <div>
-    //     <p>Time: ${info.time}</p>
-    //     <img src="${info.icon}">
-    //     <p>Temperature: ${info.temp}</p>
-    //     <p>Wind Speed: ${info.wind}</p>
-    //     <p>Humidity: ${info.humidity}</p>
-    // </div>`
     
-
+    
 
          displayInfo(info);
-        //  day1(info);
+   
     });
     
 
@@ -166,9 +173,13 @@ function displayCity (city) {
 //city temp wind and humidity to show in box
 
 function displayInfo (info) {
-    // var iconDisplay = document.getElementById('icon-display').src = 'https://openweathermap.org/img/w/' + info.icon + '.png';
-    // // var iconURL = 'https://openweathermap.org/img/w/' + info.icon + '.png';
-    // console.log(iconDisplay);
+    var iconURL = 'https://openweathermap.org/img/w/' + info.icon + '.png';
+    var iconImage = document.createElement('img');
+    iconImage.src= iconURL;
+    var iconDisplay = document.getElementById('icon-display')
+    iconDisplay.appendChild(iconImage);
+
+    
     var tempDisplay = document.getElementById('temp-display')
     tempDisplay.textContent= info.temp
 
@@ -185,11 +196,6 @@ function displayInfo (info) {
 
 
 
-// function day1 (info) {
-//     var day1Display = document.getElementById('day1-display')
-//     day1Display.textContent= in
-
-// }
 
                 
 //5 day forecast to show in cards in box

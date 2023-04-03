@@ -13,78 +13,58 @@
 
         <link rel="stylesheet" href="./assets/style.css">
     </head>
-    
     <body>
-      <header>
-        <nav class="navbar navbar-expand-sm navbar-dark text-center">
-            <a class="navbar-brand ">Weather Dashboard</a>
-                
-        </nav>
+        <header class="container-fluid bg-dark text-light mb-5 p-3">
+            <div class="d-flex align-items-center">
+                <h1 class="display-4">Weather Dashboard</h1>
+            </div>
     </header>
       <main>
-     <div class="row align-items-md-stretch">
-        <form id="city-form" class="col-md-3">
-            <div class="h-100 p-5 text-white bg-primary border rounded-3">
-                <h2>Search For a City</h2>
+     <div class="container my-5">
+        <form id="city-form" class="justify-content-center">
+                <h2 class="justify-content-center"> Search For a City</h2>
                 <input id="city-input"></input>
-                <p></p>
                 <div id="history"></div>
-            </div>
+        </form>
         </div>
-    <div class="col-md-6">
-            <div class=" h-100 p-5 text-white bg-primary border rounded-3">
-                <h2 id="city-display"></h2>
+    <div class="container col-md-12">
+      <div class=" justify-content-center h-100 p-4 text-white bg-dark border rounded-3">
+             <div class= "container col-6 my-4 bg-success border rounded-3">
+                <h2 id="city-display"></h2> 
                 <p id= "time-display"></p>
                 <p id="icon-display"></p>
-                <div id="info-display-1">
-
                 <p>Temperature: <span id='temp-display'></span></p>
                 <p>Wind: <span id = 'wind-display'></span></p>
                 <p>Humidity: <span id = 'humidity-display'></span></p>
-                </div>
-                <div class="col-md-6">
-                    <div class="h-100 p-5 bg-primary border rounded-3">
-                        <h2>5 Day Forecast:</h2>
-                        <div class="card">
-                            <div class="card-body text-dark">
+             </div> 
+              <div class="row-cols-6 row h-100 p-2 bg-primary border rounded-3">
+                    
+                
+                            <div class="card card-body m-1  text-dark">
                                 <h4 class= "card-title">Day 1</h4>
                                 <p id="day1-display"></p>
                             </div>
-                            <div class="card">
-                                <div class="card-body text-dark">
+                             <div class="card card-body m-1 text-dark">
                                     <h4 class="card-title">Day 2</h4>
                                     <p id="day2-display"></p>
-                                </div>
-                             <div class="card">
-                                    <div class="card-body text-dark">
+                             </div>
+                              <div class="card card-body m-1 text-dark">
                                         <h4 class="card-title">Day 3</h4>
                                         <p id="day3-display"></p>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-body text-dark">
+                              </div>           
+                             <div class="card card-body m-1 text-dark">
                                             <h4 class="card-title">Day 4</h4>
                                             <p id="day4-display"></p>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body text-dark">
-                                                <h4 class="card-title">Day 5</h4>
-                                                <p id="day5-display"></p>
-                                            </div>
-                        </div>
-            </div>
-            
-
-        </div>
+                             </div>              
+                            <div class="card card-body m-1 text-dark">
+                                            <h4 class="card-title">Day 5</h4>
+                                            <p id="day5-display"></p>
+                             </div>
+                 </div>
      </div>
-     
-              
-            </div>
-        </div>
+          
+     </div> 
       </main>
-      <footer>
-        <!-- place footer here -->
-      </footer>
-      <!-- Bootstrap JavaScript Libraries -->
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
       </script>

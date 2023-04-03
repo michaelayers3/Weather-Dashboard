@@ -25,8 +25,6 @@ function getLatLon() {
             
         }
         
-
-
         getWeather(city.lat, city.lon);
         saveCityData(city);
         createHistoryButton(city);
@@ -58,16 +56,25 @@ function getWeather(lat, lon) {
         }
       
 
-        for(var i=0; i <40; i += 8) {
-            var info = {
-                time: (data.list[i].dt_txt ),
-                icon: (data.list[i].weather[0].icon),
-                temp: (data.list[i].main.temp + '°F'),
-                wind: (data.list[i].wind.speed + ' MPH'),
-                humidity: (data.list[i].main.humidity + '%'),
-            }
-            console.log(i, info);
-        }
+        // for(var i=0; i <40; i += 8) {
+        //     var info = {
+        //         time: (data.list[i].dt_txt ),
+        //         icon: (data.list[i].weather[0].icon),
+        //         temp: (data.list[i].main.temp + '°F'),
+        //         wind: (data.list[i].wind.speed + ' MPH'),
+        //         humidity: (data.list[i].main.humidity + '%'),
+        //     }
+        //     // console.log(i, info);
+        // }
+        // var i = {
+        //     zero: 0,
+        //     eight: 8,
+        //     sixteen: 16,
+        //     twentyfour: 24,
+        //     thirtytwo: 32,
+        // }
+        // console.log(i.zero)
+
         var i=0;
         var info= {
             time: (data.list[i].dt_txt ),
@@ -135,6 +142,7 @@ function getWeather(lat, lon) {
    
     });
     
+   
 
 
 }
@@ -150,10 +158,10 @@ function saveCityData(city) {
 function createHistoryButton(city) {
     var historyButton = document.createElement('button');
     historyButton.textContent = city.name;
-    historyButton.classList.add('history-button');
-    // historyButton.addEventListener('click', function () {
-    //     getWeather(city.lat, city.lon);
-    // });
+    // historyButton.classList.add('history-button');
+    historyButton.addEventListener('click', function () {
+        displayCity(historyButton.textContent);
+    });
     document.getElementById('history')
     .appendChild(historyButton);
 }
@@ -177,7 +185,8 @@ function displayInfo (info) {
     var iconImage = document.createElement('img');
     iconImage.src= iconURL;
     var iconDisplay = document.getElementById('icon-display')
-    iconDisplay.appendChild(iconImage);
+    iconDisplay.append(iconImage);
+    
 
     
     var tempDisplay = document.getElementById('temp-display')
@@ -191,7 +200,7 @@ function displayInfo (info) {
 
     var timeDisplay = document.getElementById('time-display')
     timeDisplay.textContent= info.time
-    
+
 }
 
 

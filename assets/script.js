@@ -1,6 +1,6 @@
 var cityForm = document.getElementById('city-form');
 var cityInput;
-
+var forecastGroup= document.querySelectorAll('.card');
 
 cityForm.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -51,21 +51,72 @@ function getWeather(lat, lon) {
     })
     .then(function (data) {
         console.log(data);
-        for(var i=0; i <40; i += 8) {
-            // console.log(i, data.list[i]);
+        for(var i=0; i <forecastGroup.length; i++) {
+            var thisDay= forecastGroup[i];
+            // console.log(data.list)
+            var weatherOffset= 5;
+            var weatherIndex= i*8 + weatherOffset;
+            console.log(weatherIndex);
+            var thisWeather= data.list[weatherIndex];
+            console.log(thisWeather)
+
+            var thisDate=thisWeather.dt_txt.split(' ')[0];
+            thisDay.children[0].textContent=thisDate;
+
+            var iconURL= 'https://openweathermap.org/img/w/' + thisWeather.weather[0].icon + '.png'
+            var iconImage= document.createElement('img');
+            iconImage.src=iconURL;
+            var iconDisplay= thisDay.children[1]
+            iconDisplay.append(iconImage);
+         
+
+            var thisTemp=thisWeather.main.temp
+            thisDay.children[2].textContent="Temperature: " + thisTemp + '°F'
+
+            var thisWind=thisWeather.wind.speed;
+            thisDay.children[3].textContent="Wind: " + thisWind + "mph";
+
+            var thisHumidity=thisWeather.main.humidity
+            thisDay.children[4].textContent= "Humidity: " + thisHumidity + "%";
+        }
+    });
+
+
+            // var iconURL = 'https://openweathermap.org/img/w/' + thisWeather.weather[0].icon + '.png';
+            // var iconImage = document.createElement('img');
+            // iconImage.src= iconURL;
+            // var iconDisplay = document.getElementById('icon-display')
+            // iconDisplay.append(iconImage);
+            
+            // var tempDisplay = document.getElementById('temp-display')
+            // tempDisplay.textContent= info.temp
+        
+            // var windDisplay = document.getElementById('wind-display')
+            // windDisplay.textContent= info.wind
+        
+            // var humidityDisplay = document.getElementById('humidity-display')
+            // humidityDisplay.textContent= info.humidity
+        
+            // var timeDisplay = document.getElementById('time-display')
+            // timeDisplay.textContent= info.time
         }
       
+        
 
-        // for(var i=0; i <40; i += 8) {
-        //     var info = {
-        //         time: (data.list[i].dt_txt ),
-        //         icon: (data.list[i].weather[0].icon),
-        //         temp: (data.list[i].main.temp + '°F'),
-        //         wind: (data.list[i].wind.speed + ' MPH'),
-        //         humidity: (data.list[i].main.humidity + '%'),
-        //     }
-        //     // console.log(i, info);
-        // }
+        for(var i=0; i <40; i += 8) {
+            var info = {
+                time: (data.list[i].dt_txt ),
+                icon: (data.list[i].weather[0].icon),
+                temp: (data.list[i].main.temp + '°F'),
+                wind: (data.list[i].wind.speed + ' MPH'),
+                humidity: (data.list[i].main.humidity + '%'),
+            }
+            displayInfo(info);
+            console.log(i, info);
+        }
+        
+     
+    
         // var i = {
         //     zero: 0,
         //     eight: 8,
@@ -74,78 +125,14 @@ function getWeather(lat, lon) {
         //     thirtytwo: 32,
         // }
         // console.log(i.zero)
-
-        var i=0;
-        var info= {
-            time: (data.list[i].dt_txt ),
-            icon: (data.list[i].weather[0].icon),
-            temp: (data.list[i].main.temp + '°F'),
-            wind: (data.list[i].wind.speed + ' MPH'),
-            humidity: (data.list[i].main.humidity + '%'),
-        }
-        var day1Display = document.getElementById('day1-display')
-        day1Display.textContent= JSON.stringify(info);
-        var i=8;
-        var info= {
-            time: (data.list[i].dt_txt ),
-            icon: (data.list[i].weather[0].icon),
-            temp: (data.list[i].main.temp + '°F'),
-            wind: (data.list[i].wind.speed + ' MPH'),
-            humidity: (data.list[i].main.humidity + '%'),
-        }
-
-        var day2Display = document.getElementById('day2-display')
-        day2Display.textContent= JSON.stringify(info);
-
-        var i=16;
-        var info= {
-            time: (data.list[i].dt_txt ),
-            icon: (data.list[i].weather[0].icon),
-            temp: (data.list[i].main.temp + '°F'),
-            wind: (data.list[i].wind.speed + ' MPH'),
-            humidity: (data.list[i].main.humidity + '%'),
-        }
-
-        var day3Display = document.getElementById('day3-display')
-        day3Display.textContent= JSON.stringify(info);
-
-        var i=24;
-        var info= {
-            time: (data.list[i].dt_txt ),
-            icon: (data.list[i].weather[0].icon),
-            temp: (data.list[i].main.temp + '°F'),
-            wind: (data.list[i].wind.speed + ' MPH'),
-            humidity: (data.list[i].main.humidity + '%'),
-        }
-
-        var day4Display = document.getElementById('day4-display')
-        day4Display.textContent= JSON.stringify(info);
-
-        var i=32;
-        var info= {
-            time: (data.list[i].dt_txt ),
-            icon: (data.list[i].weather[0].icon),
-            temp: (data.list[i].main.temp + '°F'),
-            wind: (data.list[i].wind.speed + ' MPH'),
-            humidity: (data.list[i].main.humidity + '%'),
-        }
-
-        var day5Display = document.getElementById('day5-display')
-        day5Display.textContent= JSON.stringify(info);
-        
-
-    
-    
-    
-
-         displayInfo(info);
    
-    });
-    
-   
+     
+
+       
+       
 
 
-}
+       
 
 function saveCityData(city) {
     var cityData = JSON.parse(localStorage.getItem('cityData')) || [];
@@ -160,7 +147,7 @@ function createHistoryButton(city) {
     historyButton.textContent = city.name;
     // historyButton.classList.add('history-button');
     historyButton.addEventListener('click', function () {
-        displayCity(historyButton.textContent);
+        displayCity(city.name);
     });
     document.getElementById('history')
     .appendChild(historyButton);
@@ -185,9 +172,8 @@ function displayInfo (info) {
     var iconImage = document.createElement('img');
     iconImage.src= iconURL;
     var iconDisplay = document.getElementById('icon-display')
+    iconDisplay.innerHTML='';
     iconDisplay.append(iconImage);
-    
-
     
     var tempDisplay = document.getElementById('temp-display')
     tempDisplay.textContent= info.temp
@@ -203,11 +189,6 @@ function displayInfo (info) {
 
 }
 
-
-
-
-                
-//5 day forecast to show in cards in box
 
 
 // icons

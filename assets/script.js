@@ -109,14 +109,6 @@ function getWeather(lat, lon) {
 
         }
       
-   
-     
-
-       
-       
-
-
-       
 
 function saveCityData(city) {
     var cityData = JSON.parse(localStorage.getItem('cityData')) || [];
@@ -126,10 +118,12 @@ function saveCityData(city) {
 
 
 
+  
+
 function createHistoryButton(city) {
     var historyButton = document.createElement('button');
     historyButton.textContent = city.name;
-    // historyButton.classList.add('history-button');
+ 
     historyButton.addEventListener('click', function () {
         displayCity(city.name);
     });

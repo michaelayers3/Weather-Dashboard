@@ -1,6 +1,7 @@
 var cityForm = document.getElementById('city-form');
 var cityInput;
 var forecastGroup= document.querySelectorAll('.card');
+var presentDay= document.querySelector('.present-day');
 
 cityForm.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -50,10 +51,34 @@ function getWeather(lat, lon) {
         return response.json();
     })
     .then(function (data) {
+        
+        var firstDay= data.list[0];
+        console.log(firstDay);
+
+        var firstDate= firstDay.dt_txt.split(' ')[0];
+        presentDay.children[1].textContent=firstDate;
+
+        var iconURL= 'https://openweathermap.org/img/w/' + firstDay.weather[0].icon + '.png'
+            var iconImage= document.createElement('img');
+            iconImage.src=iconURL;
+            var iconDisplay= presentDay.children[2]
+            iconDisplay.innerHTML='';
+            iconDisplay.append(iconImage);
+    
+        var firstTemp= firstDay.main.temp
+        presentDay.children[3].textContent="Temperature: " + firstTemp + '°F'
+
+        var firstWind= firstDay.wind.speed;
+        presentDay.children[4].textContent="Wind: " + firstWind + "mph";
+
+        var firstHumidity= firstDay.main.humidity
+        presentDay.children[5].textContent= "Humidity: " + firstHumidity + "%";
+        
+
         console.log(data);
         for(var i=0; i <forecastGroup.length; i++) {
             var thisDay= forecastGroup[i];
-            // console.log(data.list)
+            console.log(data.list)
             var weatherOffset= 5;
             var weatherIndex= i*8 + weatherOffset;
             console.log(weatherIndex);
@@ -67,6 +92,7 @@ function getWeather(lat, lon) {
             var iconImage= document.createElement('img');
             iconImage.src=iconURL;
             var iconDisplay= thisDay.children[1]
+            iconDisplay.innerHTML='';
             iconDisplay.append(iconImage);
          
 
@@ -81,50 +107,8 @@ function getWeather(lat, lon) {
         }
     });
 
-
-            // var iconURL = 'https://openweathermap.org/img/w/' + thisWeather.weather[0].icon + '.png';
-            // var iconImage = document.createElement('img');
-            // iconImage.src= iconURL;
-            // var iconDisplay = document.getElementById('icon-display')
-            // iconDisplay.append(iconImage);
-            
-            // var tempDisplay = document.getElementById('temp-display')
-            // tempDisplay.textContent= info.temp
-        
-            // var windDisplay = document.getElementById('wind-display')
-            // windDisplay.textContent= info.wind
-        
-            // var humidityDisplay = document.getElementById('humidity-display')
-            // humidityDisplay.textContent= info.humidity
-        
-            // var timeDisplay = document.getElementById('time-display')
-            // timeDisplay.textContent= info.time
         }
       
-        
-
-        for(var i=0; i <40; i += 8) {
-            var info = {
-                time: (data.list[i].dt_txt ),
-                icon: (data.list[i].weather[0].icon),
-                temp: (data.list[i].main.temp + '°F'),
-                wind: (data.list[i].wind.speed + ' MPH'),
-                humidity: (data.list[i].main.humidity + '%'),
-            }
-            displayInfo(info);
-            console.log(i, info);
-        }
-        
-     
-    
-        // var i = {
-        //     zero: 0,
-        //     eight: 8,
-        //     sixteen: 16,
-        //     twentyfour: 24,
-        //     thirtytwo: 32,
-        // }
-        // console.log(i.zero)
    
      
 
@@ -164,34 +148,6 @@ function displayCity (city) {
     
 }
 
-
-//city temp wind and humidity to show in box
-
-function displayInfo (info) {
-    var iconURL = 'https://openweathermap.org/img/w/' + info.icon + '.png';
-    var iconImage = document.createElement('img');
-    iconImage.src= iconURL;
-    var iconDisplay = document.getElementById('icon-display')
-    iconDisplay.innerHTML='';
-    iconDisplay.append(iconImage);
-    
-    var tempDisplay = document.getElementById('temp-display')
-    tempDisplay.textContent= info.temp
-
-    var windDisplay = document.getElementById('wind-display')
-    windDisplay.textContent= info.wind
-
-    var humidityDisplay = document.getElementById('humidity-display')
-    humidityDisplay.textContent= info.humidity
-
-    var timeDisplay = document.getElementById('time-display')
-    timeDisplay.textContent= info.time
-
-}
-
-
-
-// icons
 
 //local storage
 

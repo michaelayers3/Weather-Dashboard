@@ -141,9 +141,9 @@ function searchHistory() {
     });
     
 }
-function whatever () {
-    var cityInput = clickedButton;
-}
+// function whatever () {
+//     var cityInput = clickedButton;
+// }
 
 //City input to show in box
 function displayCity (city) {

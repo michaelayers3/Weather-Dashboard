@@ -28,7 +28,6 @@ function getLatLon() {
         
         getWeather(city.lat, city.lon);
         saveCityData(city);
-        createHistoryButton(city);
         displayCity(city);
         
         
@@ -53,7 +52,7 @@ function getWeather(lat, lon) {
     .then(function (data) {
         
         var firstDay= data.list[0];
-        console.log(firstDay);
+        // console.log(firstDay);
 
         var firstDate= firstDay.dt_txt.split(' ')[0];
         presentDay.children[1].textContent=firstDate;
@@ -75,15 +74,15 @@ function getWeather(lat, lon) {
         presentDay.children[5].textContent= "Humidity: " + firstHumidity + "%";
         
 
-        console.log(data);
+        // console.log(data);
         for(var i=0; i <forecastGroup.length; i++) {
             var thisDay= forecastGroup[i];
-            console.log(data.list)
+            // console.log(data.list)
             var weatherOffset= 5;
             var weatherIndex= i*8 + weatherOffset;
-            console.log(weatherIndex);
+            // console.log(weatherIndex);
             var thisWeather= data.list[weatherIndex];
-            console.log(thisWeather)
+            // console.log(thisWeather)
 
             var thisDate=thisWeather.dt_txt.split(' ')[0];
             thisDay.children[0].textContent=thisDate;
@@ -120,19 +119,31 @@ function saveCityData(city) {
 
   
 
-function createHistoryButton(city) {
-    var historyButton = document.createElement('button');
-    historyButton.textContent = city.name;
- 
-    historyButton.addEventListener('click', function () {
-        displayCity(city.name);
-    });
-    document.getElementById('history')
-    .appendChild(historyButton);
+function createHistoryButton() {
+        // displayCity(city.name);
+        var searches= JSON.parse(localStorage.getItem('cityData'));
+        for(var i=0; i < searches.length; i++) {
+            console.log(searches[i].name);
+            var historyButton = document.createElement('button');
+            historyButton.textContent = searches[i].name;
+            document.getElementById('history')
+            .appendChild(historyButton);
+        }
 }
 
 
-
+function searchHistory() {
+    var historyForm= document.getElementById('history');
+    historyform.addEventListener('click', function (event) {
+        event.preventDefault();
+     var clickedButton=  this.textContent;
+     whatever (clickedButton)
+    });
+    
+}
+function whatever () {
+    var cityInput = clickedButton;
+}
 
 //City input to show in box
 function displayCity (city) {
@@ -141,6 +152,7 @@ function displayCity (city) {
     
     
 }
+createHistoryButton();
 
 
 //local storage

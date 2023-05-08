@@ -49,7 +49,7 @@ function getWeather(lat, lon) {
     .then(function (data) {
         
         var firstDay= data.list[0];
-        // console.log(firstDay);
+   
 
         var firstDate= firstDay.dt_txt.split(' ')[0];
         presentDay.children[1].textContent=firstDate;
@@ -71,15 +71,15 @@ function getWeather(lat, lon) {
         presentDay.children[5].textContent= "Humidity: " + firstHumidity + "%";
         
 
-        // console.log(data);
+      
         for(var i=0; i <forecastGroup.length; i++) {
             var thisDay= forecastGroup[i];
-            // console.log(data.list)
+         
             var weatherOffset= 5;
             var weatherIndex= i*8 + weatherOffset;
-            // console.log(weatherIndex);
+           
             var thisWeather= data.list[weatherIndex];
-            // console.log(thisWeather)
+            
             
             var thisDate=thisWeather.dt_txt.split(' ')[0];
             thisDay.children[0].textContent=thisDate;
@@ -154,31 +154,8 @@ historyEl.addEventListener('click', function(event){
 });
 
 
-// function recallHistory() {
-//     var searches= JSON.parse(localStorage.getItem('cityData'));
-//     historyButton.addEventListener('click', function() {
-//         var buttonInput = historyButton.textContent;
-//         console.log(buttonInput);
-//         for (var i=0; i < searches.length; i++) {
-//             if (buttonInput === searches[i].name) {
-//                 getLatLon(searches[i].name);
-//                 getWeather(searches[i].lat, searches[i].lon);
-//                 displayCity(searches[i].name);
-//             }else {
-//                 console.log('error');
-//             }
-//         }
-
-//         // getLatLon(buttonInput);
-//         // getWeather(buttonInput);
-//         // displayCity(buttonInput);
-
-
-//     })
-// }
    
 createHistoryButton();
-// recallHistory();
 
 
 

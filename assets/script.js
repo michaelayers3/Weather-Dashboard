@@ -1,18 +1,14 @@
 var cityForm = document.getElementById('city-form');
-var cityInput;
 var forecastGroup= document.querySelectorAll('.card');
 var presentDay= document.querySelector('.present-day');
+var historyEl= document.querySelector('#history');
 
-cityForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    cityInput = document.getElementById('city-input').value;
-    getLatLon();
-});
 
-function getLatLon() {
+
+function getLatLon(city) {
     fetch(
 'https://api.openweathermap.org/geo/1.0/direct?q='
- + cityInput 
+ + city 
  + '&limit=1&appid=d04b52f8ed3feffd9b0a8ea7bffb3e92&units=imperial'
     )
     .then(function (response) {
@@ -27,13 +23,14 @@ function getLatLon() {
         }
         
         getWeather(city.lat, city.lon);
-        saveCityData(city);
+        
         displayCity(city);
+       
         
         
     });
-
-    if (cityInput === '') {
+   
+    if (city === '') {
         alert('Please enter a city name');
     }
 }
@@ -83,78 +80,105 @@ function getWeather(lat, lon) {
             // console.log(weatherIndex);
             var thisWeather= data.list[weatherIndex];
             // console.log(thisWeather)
-
+            
             var thisDate=thisWeather.dt_txt.split(' ')[0];
             thisDay.children[0].textContent=thisDate;
-
+            
             var iconURL= 'https://openweathermap.org/img/w/' + thisWeather.weather[0].icon + '.png'
             var iconImage= document.createElement('img');
             iconImage.src=iconURL;
             var iconDisplay= thisDay.children[1]
             iconDisplay.innerHTML='';
             iconDisplay.append(iconImage);
-         
-
+            
+            
             var thisTemp=thisWeather.main.temp
             thisDay.children[2].textContent="Temperature: " + thisTemp + '°F'
-
+            
             var thisWind=thisWeather.wind.speed;
             thisDay.children[3].textContent="Wind: " + thisWind + "mph";
-
+            
             var thisHumidity=thisWeather.main.humidity
             thisDay.children[4].textContent= "Humidity: " + thisHumidity + "%";
         }
     });
+    
+}
 
-        }
-      
+function displayCity (city) {
+    var cityDisplay = document.getElementById('city-display')
+    cityDisplay.textContent= city.name
+}
 
 function saveCityData(city) {
+    console.log(city);
     var cityData = JSON.parse(localStorage.getItem('cityData')) || [];
+    
+    if(cityData.includes(city)){
+        return;
+    }
+    if (cityData.length >= 5){
+        cityData.shift()
+    }
     cityData.push(city);
     localStorage.setItem('cityData', JSON.stringify(cityData));
 }
 
-
-
-  
-
 function createHistoryButton() {
-        // displayCity(city.name);
-        var searches= JSON.parse(localStorage.getItem('cityData'));
+    var searches= JSON.parse(localStorage.getItem('cityData'));
+    console.log(searches);
+    historyEl.innerHTML=''
         for(var i=0; i < searches.length; i++) {
-            console.log(searches[i].name);
+            console.log(searches[i]);
             var historyButton = document.createElement('button');
-            historyButton.textContent = searches[i].name;
-            document.getElementById('history')
-            .appendChild(historyButton);
+            historyButton.textContent = searches[i];
+            document.getElementById('history').appendChild(historyButton);
         }
 }
 
+cityForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var cityInput = document.getElementById('city-input').value;
+    getLatLon(cityInput);
+    saveCityData(cityInput.toUpperCase());
+    createHistoryButton();
+});
 
-function searchHistory() {
-    var historyForm= document.getElementById('history');
-    historyform.addEventListener('click', function (event) {
-        event.preventDefault();
-     var clickedButton=  this.textContent;
-     whatever (clickedButton)
-    });
-    
-}
-// function whatever () {
-//     var cityInput = clickedButton;
+historyEl.addEventListener('click', function(event){
+    if(!event.target.matches('button')){
+        return
+    } else {
+    var buttonText = event.target.textContent
+    getLatLon(buttonText);
+    }
+});
+
+
+// function recallHistory() {
+//     var searches= JSON.parse(localStorage.getItem('cityData'));
+//     historyButton.addEventListener('click', function() {
+//         var buttonInput = historyButton.textContent;
+//         console.log(buttonInput);
+//         for (var i=0; i < searches.length; i++) {
+//             if (buttonInput === searches[i].name) {
+//                 getLatLon(searches[i].name);
+//                 getWeather(searches[i].lat, searches[i].lon);
+//                 displayCity(searches[i].name);
+//             }else {
+//                 console.log('error');
+//             }
+//         }
+
+//         // getLatLon(buttonInput);
+//         // getWeather(buttonInput);
+//         // displayCity(buttonInput);
+
+
+//     })
 // }
-
-//City input to show in box
-function displayCity (city) {
-    var cityDisplay = document.getElementById('city-display')
-    cityDisplay.textContent= city.name
-    
-    
-}
+   
 createHistoryButton();
+// recallHistory();
 
-
-//local storage
 
 
